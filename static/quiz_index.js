@@ -322,7 +322,7 @@ const demoQuestions = [
             return{ text: "Working towards development and testing of satellites", nextQuestion: 14, parent:[2,3],club :"CSAT" }},
             ()=>{
                 parent[0]=2;
-                parent[1]=3;
+                parent[1]=3;    
             return{ text: "Build transmitters to communicate with the International Space Station", nextQuestion: 16, parent:[2,3],club :"HAM" }},
             ()=>{
                 parent[0]=2;

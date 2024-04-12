@@ -29,7 +29,7 @@ import qrcode
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from io import BytesIO
-from .models import Club_Primary, Attendance
+from .models import Club_Primary, Club_Secondary,Attendance
 from django.contrib.auth.decorators import login_required
 
 
@@ -40,10 +40,15 @@ def explore(request, pk):
      recommended_users = [response.user.username for response in club_responses]
      print(recommended_users)
      return render(request, 'base/explore.html', {'club_object': club_object, 'recommended_users': recommended_users})
-
-# def core(request, pk):
-#     club_object=get_object_or_404(Club_Primary, club=pk)
-#     return render(request, 'base/core.html',)
+def core(request, pk):
+    # Retrieve the club object based on the primary key (pk)
+    club_object = get_object_or_404(Club_Secondary, club=pk)
+        
+    # Retrieve all inducted members for the club
+    inducted_members = club_object.member_set.all()
+    
+    # Pass the club object and inducted members to the template
+    return render(request, 'base/core.html', {'club_object': club_object, 'inducted_members': inducted_members})
 
 @login_required(login_url='login')  # Adjust login URL
 def generate_qrcode(request, club_name):

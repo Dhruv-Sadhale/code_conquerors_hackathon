@@ -15,7 +15,7 @@
               <p>{{ response.club }}</p>
             {% else %}
               <!-- Convert club names into clickable links with onclick event to trigger sendEmail() -->
-              <a href="javascript:void(0)" onclick="sendEmail('{{ response.club }}', this)">{{ response.club }}</a>
+              <a href="javascript:void(0)" onclick="sendEmail1('{{ response.club }}', this)">{{ response.club }}</a>
             {% endif %}
             <p>{{ response.description }}</p>
           </div>
@@ -31,12 +31,12 @@
 
   <script>
 
-    function sendEmail(clubName, linkElement) {
+    function sendEmail1(clubName, linkElement) {
         Email.send({
             Host: "smtp.elasticemail.com",
             Username: "dhruv.sadhale@gmail.com",
             Password: "703A64E0DE6E0B9C54CACEDC5B28C8D0A6FD",
-            To: "dhruvsadhale.cis@gmail.com",
+            To: "phoenixelixir28@gmail.com",
             From: "dhruv.sadhale@gmail.com",
             Subject: "Application for Induction",
             Body: "I would like to apply for induction to the club: " + clubName
@@ -44,8 +44,7 @@
                 // Handle success
                 console.log("Email sent:", message);
                 // Disable the link
-                linkElement.removeAttribute("onclick");
-                linkElement.style.color = "grey"; // Optionally, change the color to indicate it's disabled
+               
                 // Optionally, inform the user about the success
                 alert("Email sent successfully!");
                 // Redirect to dashboard
