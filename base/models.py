@@ -66,7 +66,12 @@ class Club_Secondary(models.Model):
     def _str_(self):
         return self.club
 
+class Member(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    clubs = models.ManyToManyField(Club_Secondary)
     
+    def __str__(self):
+        return self.user.username
 
 class Attendance(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

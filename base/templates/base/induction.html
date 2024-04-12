@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<body class="dashboard-bg">
+  <div class="content-wrapper">
+    <h2 id="greeting">Apply for Inductions, {{ username }}.</h2>
+   
+    <div class="clubs-section">
+      
+        <h2>Select the clubs you want to apply for inductions</h2>
+      {% if user_responses %}
+        {% for response in user_responses %}
+          <div class="club-container">
+            <!-- Convert club names into clickable links -->
+            <a href="/explore/{{response.club}}">{{ response.club }}</a>
+            <p>{{ response.description }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No responses available.</p>
+      {% endif %}
+    </div>
+
+    
+  </div>
+</body>
+{% endblock %}
