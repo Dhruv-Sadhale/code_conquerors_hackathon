@@ -1,0 +1,55 @@
+{% extends "main.html" %}
+{%block content%}
+{%load static%}
+
+<section class="hero">
+    <div class="quote">
+        <div id="clubNavigator"></div>
+
+    </div>
+    <img src="{% static 'images/mehdi-messrro-iNFMfq7qxcQ-unsplash.jpg' %}" alt="Background Image">
+</section>
+
+<section id="textTransitionTrigger" class="content-block content-block-left">
+    <div class="container text-left">
+        <img src="{% static 'images/coepfinal1.jpg' %}" alt="People working on a laptop">
+        <p id="textToCenter">Stay connected with your peers. Be a core club member of your favorite club.</p>
+    </div>
+</section>
+
+<section id="textTransitionTrigger2" class="content-block content-block-right">
+    <div class="container text-right">
+        <!-- Replace the image path with your actual dynamic graphic -->
+        <img src="{% static 'images/csi.jpg' %}" alt="Dynamic Graphic">
+        <p id="textToCenter2">Take our elite test to venture your capabilities.</p>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="stat-box">
+                    <h2>Tests Taken</h2>
+                    <p class="count" id="testsCount">0</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-box">
+                    <h2>Satisfied Users</h2>
+                    <p class="count" id="usersCount">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer mt-auto py-3 bg-dark">
+    <div class="container text-center text-white">
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </div>
+</footer>
+
+
+
+{%endblock content%}
