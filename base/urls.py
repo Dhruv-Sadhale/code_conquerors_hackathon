@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/record_response/', views.record_response, name='record_response'),
     path('api/record_club/', views.record_club, name='record_club'),
     path('clubs/', views.clubs, name='clubs'),
+    path('display_recommendations/', views.induction, name='display_recommendations')
 ]
 

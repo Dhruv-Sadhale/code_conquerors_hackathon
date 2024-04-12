@@ -11,8 +11,12 @@
       {% if user_responses %}
         {% for response in user_responses %}
           <div class="club-container">
-            <!-- Convert club names into clickable links -->
-            <a href="/explore/{{response.club}}">{{ response.club }}</a>
+            {% if response.club_clicked %}
+              <p>{{ response.club }}</p>
+            {% else %}
+              <!-- Convert club names into clickable links with onclick event to trigger sendEmail() -->
+              <a href="javascript:void(0)" onclick="sendEmail('{{ response.club }}', this)">{{ response.club }}</a>
+            {% endif %}
             <p>{{ response.description }}</p>
           </div>
         {% endfor %}
@@ -23,5 +27,37 @@
 
     
   </div>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+  <script>
+
+    function sendEmail(clubName, linkElement) {
+        Email.send({
+            Host: "smtp.elasticemail.com",
+            Username: "dhruv.sadhale@gmail.com",
+            Password: "703A64E0DE6E0B9C54CACEDC5B28C8D0A6FD",
+            To: "dhruvsadhale.cis@gmail.com",
+            From: "dhruv.sadhale@gmail.com",
+            Subject: "Application for Induction",
+            Body: "I would like to apply for induction to the club: " + clubName
+        }).then(message => {
+                // Handle success
+                console.log("Email sent:", message);
+                // Disable the link
+                linkElement.removeAttribute("onclick");
+                linkElement.style.color = "grey"; // Optionally, change the color to indicate it's disabled
+                // Optionally, inform the user about the success
+                alert("Email sent successfully!");
+                // Redirect to dashboard
+                window.location.href = "{% url 'dashboard' %}";
+            })
+            .catch(error => {
+                // Handle error
+                console.error("Email send failed:", error);
+                // Optionally, inform the user about the failure
+                alert("Email send failed. Please try again later.");
+            });
+    } 
+  </script>
 </body>
 {% endblock %}
