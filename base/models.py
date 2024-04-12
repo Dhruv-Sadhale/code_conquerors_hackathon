@@ -60,6 +60,7 @@ class Club_Secondary(models.Model):
     qr_code_data = models.CharField(max_length=255, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
     created= models.DateTimeField(auto_now_add= True)
+    applicants = models.ManyToManyField(User, related_name='applied_to_clubs', blank=True)
     notification_timestamp = models.DateTimeField(auto_now_add=True)
     def generate_qrcode_data(self):
         if not self.qr_code_data:

@@ -8,12 +8,19 @@
     <h3>Categories:</h3>
     <!-- Display categories here -->
     <img src="{% url 'generate_qrcode' club_name=club_object.club %}" alt="Club QR Code">
-<a href="{% url 'attend_club' club_name=club_object.club %}">Attend Club</a>
-
+    <a href="{% url 'attend_club' club_name=club_object.club %}">Attend Club</a>
+    
     <h3>Inducted Members:</h3>
     <ul>
       {% for member in inducted_members %}
         <li>{{ member.user.username }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Applicants:</h3>
+    <ul>
+      {% for applicant in club_object.applicants.all %}
+        <li>{{ applicant.username }}</li>
       {% endfor %}
     </ul>
   </div>

@@ -597,36 +597,35 @@ const addSubmitButton = () => {
 
 
 
-function sendEmail() {
-    Email.send({
+function sendEmail2() {
+    return Email.send({
         Host: "smtp.elasticemail.com",
         Username: "dhruv.sadhale@gmail.com",
         Password: "703A64E0DE6E0B9C54CACEDC5B28C8D0A6FD",
-        To: "phoenixelixir28@gmail.com",
+        To: "phoenixelixir1028@gmail.com",
         From: "dhruv.sadhale@gmail.com",
         Subject: "This is the subject",
         Body: "And this is the body"
-    }).then(
-        message => alert(message)
-    );
+    });
 }
+
 const handleSubmission = () => {
     window.location.href = '/dashboard/';
-    sendEmail()
+    sendEmail2()
         .then(message => {
             // Handle success
             console.log("Email sent:", message);
-            // Redirect to dashboard
-            
+            // Redirect to dashboard (assuming this is intended)
+            // window.location.href = '/dashboard/';
         })
         .catch(error => {
             // Handle error
             console.error("Email send failed:", error);
             // Optionally, inform the user about the failure
-            // For example:
-             alert("Email send failed. Please try again later.");
+            alert("Email send failed. Please try again later.");
         });
 }
+
 const getCSRFToken = () => {
     const csrfCookie = document.cookie
         .split('; ')

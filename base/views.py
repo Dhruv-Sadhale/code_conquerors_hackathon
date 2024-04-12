@@ -219,7 +219,7 @@ def record_response(request):
 
             responses = []
             
-            
+             
             if question_number is not None and selected_option is not None:
                 responses.append(
                     QuizResponse(
@@ -323,3 +323,32 @@ def induction(request):
     else:
         # Redirect to the login page if user_id is not present
         return redirect('login')
+
+
+
+def record_applicant(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            club_name = data['clubName']
+            user_id = data['userId']
+            print(club_name)
+            print(user_id)
+            # Get or create the Club_Secondary object
+            club, created = Club_Secondary.objects.get_or_create(club=club_name)
+            
+            # Get the current user based on user_id
+            user = User.objects.get(pk=user_id)
+            print(user)
+            # Add the current user to the applicants field
+            print(club.applicants)
+
+            club.applicants.add(user)
+            print(club.applicants)
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            print('Error recording applicant:', str(e))
+            return JsonResponse({'status': 'error', 'message': 'An error occurred'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+

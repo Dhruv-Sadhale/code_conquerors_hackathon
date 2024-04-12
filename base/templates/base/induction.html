@@ -15,7 +15,7 @@
               <p>{{ response.club }}</p>
             {% else %}
               <!-- Convert club names into clickable links with onclick event to trigger sendEmail() -->
-              <a href="javascript:void(0)" onclick="sendEmail1('{{ response.club }}', this)">{{ response.club }}</a>
+              <a href="javascript:void(0)" onclick="sendEmail1('{{ response.club }}')">{{ response.club }}</a>
             {% endif %}
             <p>{{ response.description }}</p>
           </div>
@@ -30,25 +30,48 @@
   <script src="https://smtpjs.com/v3/smtp.js"></script>
 
   <script>
-
-    function sendEmail1(clubName, linkElement) {
+    function sendEmail1(clubName) {
+        // Make a POST request to your Django backend to record the applicant
+        fetch('{% url "record_applicant" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token
+            },
+            body: JSON.stringify({ clubName: clubName ,userId: '{{ request.user.id }}'})
+        })
+        .then(response => {
+            if (response.ok) {
+                // Application recorded successfully, send SMTP email
+                sendSMTPMail(clubName);
+            } else {
+                // Application recording failed, inform the user
+                alert("Failed to record application. Please try again later.");
+            }
+        })
+        .catch(error => {
+            console.error("Error recording application:", error);
+            // Inform the user about the error
+            alert("An error occurred while recording the application. Please try again later.");
+        });
+    }
+    
+    function sendSMTPMail(clubName) {
         Email.send({
             Host: "smtp.elasticemail.com",
             Username: "dhruv.sadhale@gmail.com",
             Password: "703A64E0DE6E0B9C54CACEDC5B28C8D0A6FD",
-            To: "phoenixelixir28@gmail.com",
+            To: "phoenixelixir1028@gmail.com",
             From: "dhruv.sadhale@gmail.com",
             Subject: "Application for Induction",
             Body: "I would like to apply for induction to the club: " + clubName
         }).then(message => {
                 // Handle success
                 console.log("Email sent:", message);
-                // Disable the link
-               
                 // Optionally, inform the user about the success
-                alert("Email sent successfully!");
-                // Redirect to dashboard
+                alert("Email sent successfully here!");
                 window.location.href = "{% url 'dashboard' %}";
+                // Redirect to dashboard
             })
             .catch(error => {
                 // Handle error
@@ -56,7 +79,34 @@
                 // Optionally, inform the user about the failure
                 alert("Email send failed. Please try again later.");
             });
-    } 
+    }
+    
+    /*function sendEmail1(clubName) {
+        Email.send({
+            Host: "smtp.elasticemail.com",
+            Username: "dhruv.sadhale@gmail.com",
+            Password: "703A64E0DE6E0B9C54CACEDC5B28C8D0A6FD",
+            To: "phoenixelixir1028@gmail.com",
+            From: "dhruv.sadhale@gmail.com",
+            Subject: "Application for Induction",
+            Body: "I would like to apply for induction to the club: " + clubName
+        }).then(message => {
+                // Handle success
+                console.log("Email sent:", message);
+                // Disable the link
+                
+                // Optionally, inform the user about the success
+                alert("Email sent successfully here!");
+                window.location.href = "{% url 'dashboard' %}";
+                // Redirect to dashboard
+            })
+            .catch(error => {
+                // Handle error
+                console.error("Email send failed:", error);
+                // Optionally, inform the user about the failure
+                alert("Email send failed. Please try again later.");
+            });
+    } */
   </script>
 </body>
 {% endblock %}
