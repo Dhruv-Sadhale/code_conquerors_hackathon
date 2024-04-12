@@ -13,16 +13,45 @@
     <h3>Inducted Members:</h3>
     <ul>
       {% for member in inducted_members %}
-        <li>{{ member.user.username }}</li>
+        <li>{{ member.username }}</li>
       {% endfor %}
     </ul>
 
     <h3>Applicants:</h3>
-    <ul>
-      {% for applicant in club_object.applicants.all %}
-        <li>{{ applicant.username }}</li>
-      {% endfor %}
-    </ul>
+    <form id="transferForm" method="post" action="{% url 'transfer_applicants' club_name=club_object.club %}">
+      {% csrf_token %}
+      <ul>
+        {% for applicant in club_object.applicants.all %}
+          <li>
+            <input type="checkbox" name="selected_applicants" value="{{ applicant.id }}">
+            {{ applicant.username }}
+          </li>
+        {% endfor %}
+      </ul>
+      <button id="transferButton" type="button">Transfer Selected Applicants</button>
+    </form>
   </div>
+  <script>
+    document.getElementById("transferButton").addEventListener("click", function() {
+      // Get all checkboxes
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      var selectedApplicants = [];
+      
+      // Loop through checkboxes and collect selected applicants
+      checkboxes.forEach(function(checkbox) {
+        selectedApplicants.push(checkbox.value);
+      });
+      
+      // Set the value of a hidden input field with the selected applicants
+      var hiddenInput = document.createElement('input');
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = 'selected_applicants';
+      hiddenInput.value = JSON.stringify(selectedApplicants);
+      document.getElementById("transferForm").appendChild(hiddenInput);
+      
+      // Submit the form
+      document.getElementById("transferForm").submit();
+    });
+  </script>
 </body>
 {% endblock %}

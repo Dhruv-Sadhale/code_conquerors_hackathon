@@ -25,5 +25,5 @@ urlpatterns = [
     path('display_recommendations/', views.induction, name='display_recommendations'),
     path('core/<str:pk>/',views.core, name='core'),
     path('record_applicant/', views.record_applicant, name='record_applicant'),
-]
+    path('transfer_applicants/<str:club_name>/', views.transfer_applicants, name='transfer_applicants'),]
 

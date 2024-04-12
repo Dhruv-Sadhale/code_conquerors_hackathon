@@ -45,9 +45,11 @@ def core(request, pk):
     club_object = get_object_or_404(Club_Secondary, club=pk)
         
     # Retrieve all inducted members for the club
-    inducted_members = club_object.member_set.all()
+    inducted_members = club_object.inductees.all()
+    print("next line displayes inducted members")
     
     # Pass the club object and inducted members to the template
+    
     return render(request, 'base/core.html', {'club_object': club_object, 'inducted_members': inducted_members})
 
 @login_required(login_url='login')  # Adjust login URL
@@ -351,4 +353,33 @@ def record_applicant(request):
             return JsonResponse({'status': 'error', 'message': 'An error occurred'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+# views.py
+
+from django.shortcuts import redirect, get_object_or_404
+from .models import Club_Secondary, User
+
+from django.shortcuts import redirect
+
+def transfer_applicants(request, club_name):
+    if request.method == 'POST':
+        # Retrieve selected applicants from the form submission
+        selected_applicants = request.POST.getlist('selected_applicants')
+        print(selected_applicants)
+        # Get the Club_Secondary object
+        club = Club_Secondary.objects.get(club=club_name)
+
+        # Move selected applicants from applicants to inductees
+        for applicant_id in selected_applicants:
+            integer_value=int(applicant_id.strip('[]"'))
+            applicant = User.objects.get(pk=integer_value)
+            club.applicants.remove(applicant)
+            club.inductees.add(applicant)
+
+        # Redirect back to the same page
+        return redirect('core', pk=club_name)
+    else:
+        # Handle GET request (if needed)
+        pass
+
 

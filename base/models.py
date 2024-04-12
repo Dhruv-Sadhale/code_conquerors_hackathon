@@ -60,6 +60,7 @@ class Club_Secondary(models.Model):
     qr_code_data = models.CharField(max_length=255, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
     created= models.DateTimeField(auto_now_add= True)
+    inductees=models.ManyToManyField(User, related_name='inducted_to_clubs', blank=True)
     applicants = models.ManyToManyField(User, related_name='applied_to_clubs', blank=True)
     notification_timestamp = models.DateTimeField(auto_now_add=True)
     def generate_qrcode_data(self):
@@ -70,13 +71,6 @@ class Club_Secondary(models.Model):
 
     def _str_(self):
         return self.club
-
-class Member(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    clubs = models.ManyToManyField(Club_Secondary)
-    
-    def __str__(self):
-        return self.user.username
 
 class Attendance(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
