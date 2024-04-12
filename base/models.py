@@ -42,8 +42,12 @@ class ClubResponse(models.Model):
 
 class Club_Primary(models.Model):
     club=models.CharField(max_length=100, default='null')
-    motto=models.TextField()
-    highlights=models.TextField()
+    motto=models.TextField(default='null')
+    highlights=models.TextField(default='null')
+    brief_info=models.TextField(default='null')
+    events=models.TextField(default='null')
+    links=models.TextField(default='null')
+    contacts=models.TextField(default='null')
     updated = models.DateTimeField(auto_now=True)
     created= models.DateTimeField(auto_now_add= True)
 
