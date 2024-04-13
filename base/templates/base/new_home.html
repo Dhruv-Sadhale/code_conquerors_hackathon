@@ -1,0 +1,156 @@
+{% extends "main.html" %}
+{%block content%}
+{%load static%}
+<style>
+.see-more-btn {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.see-more-btn a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #040303;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.see-more-btn a:hover {
+  background-color: #79b0eb;
+}
+
+</style>
+
+    <header>
+        <nav class="navbar">
+            <h2 class="logo"><a href="#">CLUB NAVIGATOR PLUS</a></h2>
+            <input type="checkbox" id="menu-toggler">
+            <label for="menu-toggler" id="hamburger-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z" />
+                </svg>
+            </label>
+            <ul class="all-links">
+                <li><a href="#home">Home</a></li>
+                <!-- <li><a href="#services">Heirarchy</a></li> -->
+                <li><a href="#portfolio">Clubs</a></li>
+                <li><a href="#about">Take a Test</a></li>
+                {% comment %} <li><a href="#contact">Log In</a> {% endcomment %}
+                {%if request.user.is_authenticated%}
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                  {%else%}
+                  <a class="nav-link" href="{% url 'login' %}">Sign In</a></li>
+                  {%endif%}
+                <li><a href="{% url 'faculty' %}">Faculty Login</a></li>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="homepage" id="home">
+        <div class="content">
+            <div class="text">
+                <h1>Finding the Right Fit</h1>
+                <p>The various clubs of CoEP provide the students the much-cherished opportunity to come together to
+                    discuss and exchange ideas with like-minded people. Here, there's something for everyone!</p>
+            </div>
+        </div>
+    </section>
+    <section class="portfolio" id="portfolio">
+        <h2>Clubs</h2>
+        <p>Explore our wide range of clubs</p>
+        <ul class="cards">
+            <li class="card">
+                <img src="../../../static/images/boat.jpg" alt="img">
+                <h3>Boat Club</h3>
+                <p>COEP Technological University is proud to host a unique Boat Club, established in 1928, situated on
+                    the banks of the Mula River. The club boasts a diverse fleet of approximately 70 trainee and racing
+                    boats</p>
+            </li>
+            <li class="card">
+                <img src="../../../static/images/astro_1.jpg" alt="img">
+                <h3>Astronomy Club</h3>
+                <p>Explore the cosmos together under the guidance of passionate stargazers. From observing celestial
+                    phenomena to unraveling the mysteries of the universe, let's journey through the vastness of space
+                    as a community</p>
+            </li>
+            <li class="card">
+                <img src="../../../static/images/satellite.jpeg.jpg" alt="img">
+                <h3>Satellite Club(CSAT)</h3>
+                <p>Embark on an orbit of exploration with our Satellite Club! Dive into the realms of satellite
+                    technology, from understanding their functions to designing your own miniaturized space marvels.
+                    Let's launch into the future, one satellite at a time!</p>
+            </li>
+            <li class="card">
+                <img src="../../../static/images/octane.jpeg.jpg" alt="img">
+                <h3>Octane Racing</h3>
+                <p>Rev up your engines and join our Racing Club for adrenaline-fueled excitement! Whether you're into
+                    fast cars, motorcycles, or even drones, our club offers thrilling competitions, expert tips, and a
+                    tight-knit community of fellow racing enthusiasts. Get ready to feel the rush of the track!</p>
+            </li>
+            <li class="card">
+                <img src="../../../static/images/robot.jpg" alt="img">
+                <h3>Robotics Study Circle(RSC)</h3>
+                <p>Where creativity meets technology! Dive into the world of robotics as we design, build, and program
+                    robots to tackle real-world challenges. From competitions to community outreach projects, join us in
+                    exploring the cutting-edge frontier of automation and artificial intelligence. Let's engineer the
+                    future, one circuit at a time!</p>
+            </li>
+            <li class="card">
+                <img src="../../../static/images/E-cell.jpg" alt="img">
+                <h3>Bhau's E-Cell</h3>
+                <p>Join our E-Cell and ignite your passion for innovation and business savvy! From ideation to
+                    execution, we empower aspiring entrepreneurs with workshops, mentorship, and networking
+                    opportunities to turn their ideas into successful ventures. Let's embark on the journey of
+                    entrepreneurship together and shape the future of business</p>
+            </li>
+        </ul>
+    </section>
+
+    <div class="see-more-btn">
+        <a href="{%url 'clubs' %}">See more</a>
+    </div>
+
+    <section class="about" id="about">
+        <h1>Take a test</h1>
+        <p>Find out what you're best suited for</p>
+        <div class="content"><a href="{% url 'questionnaire' %}">Click Here</a></div>
+    </section>
+
+    <section class="contact" id="contact">
+        {% comment %} <h2>Contact Us</h2>
+        <p>Reach out to us for any inquiries or feedback.</p> {% endcomment %}
+        <div class="row">
+            <div class="col information">
+                <div class="contact-details">
+                    <p><i class="fas fa-map-marker-alt"></i>COEP Technological University</p>
+                    <p><i class="fas fa-envelope"></i> coeptech@outlook.com</p>
+                    <p><i class="fas fa-phone"></i>(020) 25456455</p>
+                    
+                </div>
+            </div>
+            {% comment %} <div class="col form">
+                <form>
+                    <input type="text" placeholder="Name*" required>
+                    <input type="email" placeholder="Email*" required>
+                    <textarea placeholder="Message*" required></textarea>
+                    <button id="submit" type="submit">Send Message</button>
+                </form>
+            </div> {% endcomment %}
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            <span>Copyright © 2023 All Rights Reserved</span>
+            <span class="link">
+                <a href="#">Home</a>
+                <a href="#contact">Contact</a>
+            </span>
+        </div>
+    </footer>
+
+{%endblock content%}

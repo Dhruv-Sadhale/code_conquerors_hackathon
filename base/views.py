@@ -29,9 +29,12 @@ import qrcode
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from io import BytesIO
-from .models import Club_Primary, Club_Secondary,Attendance
+from .models import Club_Primary, Club_Secondary,Attendance, Faculty
 from django.contrib.auth.decorators import login_required
 
+
+def faculty_login(request):
+    
 
 def explore(request, pk):
      club_object = get_object_or_404(Club_Primary, club=pk)
@@ -53,7 +56,7 @@ def core(request, pk):
 
     # Check if the currently logged-in user is in the list of inductees
     current_user = request.user
-    # if current_user not in inducted_members:
+    #  if current_user not in inducted_members:
     #     # If the user is not in the list of inductees, return an HTTP response with an alert message
     #     alert_message = json.dumps({'message': 'You are not an inducted member of this club.'})
     #     return HttpResponse(alert_message, content_type='application/json')
@@ -110,7 +113,7 @@ def attend_club(request,club_name):
 
 def home(request): 
    
-    return render(request, 'base/home.html')
+    return render(request, 'base/new_home.html')
 def clubs(request):
     notifications = Notification.objects.all().order_by('-timestamp')[:10]
     if(notifications):

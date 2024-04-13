@@ -6,7 +6,10 @@ from django.utils import timezone
 
 
 
-
+class Faculty(models.Model):
+    username= models.TextField(default='null')
+    password=models.TextField(default='null')
+    
 class Question(models.Model):
     text = models.CharField(max_length=255)
 
