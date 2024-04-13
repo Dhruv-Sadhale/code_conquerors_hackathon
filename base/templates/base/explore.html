@@ -15,6 +15,7 @@
       max-width: 800px;
       width: 90%;
       margin: 20px auto;
+      padding:55px;
     }
   
     .container_indi,
@@ -95,9 +96,9 @@
           {% endfor %}
         </ul>
       </div>
-    
+     
       <div class="container_2">
-        <a href="{% url 'attend_club' club_name=club_object.club %}">Attend Club</a>
+{% comment %}<a href="{% url 'attend_club' club_name=club_object.club %}">Attend Club</a>
         <p>Recommended for:</p>
         <ul>
           {% for user in recommended_users %}
@@ -105,7 +106,7 @@
           {% empty %}
             <li>No recommendations yet.</li>
           {% endfor %}
-        </ul>
+        </ul> {% endcomment %}
         <p>Wish to find out whether this club is meant for you?</p>
         <div class="quiz-link">
           <a href="/questionnaire">Take quiz here!</a>

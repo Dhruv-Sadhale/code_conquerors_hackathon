@@ -22,19 +22,15 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import QuizResponse
-
+from .models import Faculty
 # views.py
 from django.utils import timezone
 import qrcode
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from io import BytesIO
-from .models import Club_Primary, Club_Secondary,Attendance, Faculty
+from .models import Club_Primary, Club_Secondary,Attendance
 from django.contrib.auth.decorators import login_required
-
-
-def faculty_login(request):
-    
 
 def explore(request, pk):
      club_object = get_object_or_404(Club_Primary, club=pk)
@@ -68,7 +64,7 @@ def core(request, pk):
 @login_required(login_url='login')  # Adjust login URL
 def generate_qrcode(request, club_name):
     club = Club_Primary.objects.get(club=club_name)
-    qr_code_data = club.generate_qrcode_data()
+    # qr_code_data = club.generate_qrcode_data()
 
     # Create a QR code instance
     qr = qrcode.QRCode(
@@ -79,8 +75,8 @@ def generate_qrcode(request, club_name):
     )
 
     # Add data to the QR code
-    qr.add_data(qr_code_data)
-    qr.make(fit=True)
+    # qr.add_data(qr_code_data)
+    # qr.make(fit=True)
 
     # Create an image from the QR code instance
     img = qr.make_image(fill_color="black", back_color="white")
@@ -430,4 +426,21 @@ def delete_user_response(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+# def test(request):
+#     return render(request, 'clubs.html')
 
+def faculty(request):
+    if request.method == 'POST':
+        # Handle form submission
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # Perform authentication logic here
+        if Faculty.objects.filter(username=username, password=password).exists():
+            # Authentication successful, redirect to a success page
+            return render(request, 'success.html')
+        else:
+            # Authentication failed, render login form with error
+            return render(request, 'login.html', {'error': 'Invalid credentials'})
+    else:
+        # Render the login form for GET requests
+        return render(request, 'login.html')

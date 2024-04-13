@@ -27,6 +27,8 @@ urlpatterns = [
     path('record_applicant/', views.record_applicant, name='record_applicant'),
     path('transfer_applicants/<str:club_name>/', views.transfer_applicants, name='transfer_applicants'),
     path( 'delete_user_response/', views.delete_user_response, name='delete_user_response'),
-    path('faculty/', views.faculty_login, name='faculty')
+    # path('faculty/', views.faculty_login, name='faculty')
+    
+    # path('faculty/', views.faculty, name='faculty'),
     ]
 

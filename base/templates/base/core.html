@@ -1,14 +1,16 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
+
 <body class="dashboard-bg">
   <div class="content-wrapper">
     <h2>{{ club_object.club }} Core Members</h2>
     
     <h3>Categories:</h3>
-    <!-- Display categories here -->
+    {% comment %} <!-- Display categories here -->
     <img src="{% url 'generate_qrcode' club_name=club_object.club %}" alt="Club QR Code">
-    <a href="{% url 'attend_club' club_name=club_object.club %}">Attend Club</a>
+    <a href="{% url 'attend_club' club_name=club_object.club %}">Attend Club</a> {% endcomment %}
     
     <h3>Inducted Members:</h3>
     <ul>
