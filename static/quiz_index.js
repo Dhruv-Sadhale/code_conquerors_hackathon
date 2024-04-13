@@ -602,7 +602,7 @@ function sendEmail2() {
         Host: "smtp.elasticemail.com",
         Username: "dhruv.sadhale@gmail.com",
         Password: "703A64E0DE6E0B9C54CACEDC5B28C8D0A6FD",
-        To: "phoenixelixir1028@gmail.com",
+        To: "dhruvsadhale.cis@gmail.com",
         From: "dhruv.sadhale@gmail.com",
         Subject: "This is the subject",
         Body: "And this is the body"

@@ -15,7 +15,7 @@ document.addEventListener('click',activate,false);
 // ScrollMagic Initialization
 // Initialize Typed.js for the dynamic typing effect
 const clubNavigatorOptions = {
-    strings: ["Club Navigator Plus", "Your trusted mentor."],
+    strings: ["Club Navigator", "Your trusted mentor."],
     typeSpeed: 60, // Typing speed in milliseconds
     backSpeed: 40, // Backspacing speed in milliseconds
     startDelay: 500, // Delay before typing starts in milliseconds

@@ -22,13 +22,17 @@
       {% csrf_token %}
       <ul>
         {% for applicant in club_object.applicants.all %}
+            {%if applicant  not in inducted_members%}
           <li>
             <input type="checkbox" name="selected_applicants" value="{{ applicant.id }}">
             {{ applicant.username }}
           </li>
+          {%endif%}
         {% endfor %}
       </ul>
+      {% if club_object.applicants.exists %}  <!-- Check if applicants exist -->
       <button id="transferButton" type="button">Transfer Selected Applicants</button>
+    {% endif %}
     </form>
   </div>
   <script>

@@ -40,17 +40,27 @@ def explore(request, pk):
      recommended_users = [response.user.username for response in club_responses]
      print(recommended_users)
      return render(request, 'base/explore.html', {'club_object': club_object, 'recommended_users': recommended_users})
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+import json
+
 def core(request, pk):
     # Retrieve the club object based on the primary key (pk)
     club_object = get_object_or_404(Club_Secondary, club=pk)
         
     # Retrieve all inducted members for the club
     inducted_members = club_object.inductees.all()
-    print("next line displayes inducted members")
-    
-    # Pass the club object and inducted members to the template
-    
+
+    # Check if the currently logged-in user is in the list of inductees
+    current_user = request.user
+    # if current_user not in inducted_members:
+    #     # If the user is not in the list of inductees, return an HTTP response with an alert message
+    #     alert_message = json.dumps({'message': 'You are not an inducted member of this club.'})
+    #     return HttpResponse(alert_message, content_type='application/json')
+    # else:
+        # If the user is in the list of inductees, render the core.html template
     return render(request, 'base/core.html', {'club_object': club_object, 'inducted_members': inducted_members})
+
 
 @login_required(login_url='login')  # Adjust login URL
 def generate_qrcode(request, club_name):
@@ -139,9 +149,9 @@ def send_email_notification(user, recommended_clubs):
 
 
 
+@login_required(login_url='login')
 def dashboard(request):
     # Retrieve the user's ID from the session
-    username = request.user.username
     user_id = request.session.get('user_id')
 
     # Check if user_id is present in the session
@@ -149,8 +159,11 @@ def dashboard(request):
         # Fetch the user's responses to display on the dashboard
         user_responses = ClubResponse.objects.filter(user_id=user_id)
 
-        # Pass user_responses to the template
-        return render(request, 'base/dashboard.html', {'user_responses': user_responses, 'username': username})
+        # Fetch the clubs in which the user is an inductee
+        inducted_clubs = Club_Secondary.objects.filter(inductees=request.user)
+        
+        # Pass user_responses and inducted_clubs to the template
+        return render(request, 'base/dashboard.html', {'user_responses': user_responses, 'username': request.user.username, 'inducted_clubs': inducted_clubs})
     else:
         # Redirect to the login page if user_id is not present
         return redirect('login')
@@ -319,9 +332,16 @@ def induction(request):
     if user_id is not None:
         # Fetch the user's responses to display on the dashboard
         user_responses = ClubResponse.objects.filter(user_id=user_id)
+        inducted_clubs = Club_Secondary.objects.filter(inductees=request.user)
+        club_names = [club.club for club in inducted_clubs]
+        print("next line shows inducted clubs:")
+        print(inducted_clubs)
+        inducted_clubs_js = [club.club for club in Club_Secondary.objects.filter(inductees=request.user)]
 
+    # Convert the list to JSON string
+        inducted_clubs_json = json.dumps(inducted_clubs_js)
         # Pass user_responses to the template
-        return render(request, 'base/induction.html', {'user_responses': user_responses, 'username': username})
+        return render(request, 'base/induction.html', {'user_responses': user_responses, 'username': username, 'inducted_clubs': club_names, 'inducted_club_js':inducted_clubs_json})
     else:
         # Redirect to the login page if user_id is not present
         return redirect('login')

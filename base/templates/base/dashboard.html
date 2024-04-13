@@ -37,7 +37,20 @@
         <p>No responses available.</p>
       {% endif %}
     </div>
-
+    <div class="inducted-clubs-section">
+      <h2>Inducted in:</h2>
+      {% if inducted_clubs %}
+        {% for club in inducted_clubs %}
+          <div class="club-container">
+            <h3><a href="{% url 'core' pk=club.club %}">{{ club.club }}</a></h3>
+            <p>You are an inductee in this club.</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>You are not an inductee in any club.</p>
+      {% endif %}
+    </div>
+    {% if user_responses %}
     <div class="satisfaction-section">
       <h3>Are you satisfied with the recommendations?</h3>
       <!-- Links for "Yes" and "No" -->
@@ -46,6 +59,7 @@
         <button type="button" onclick="location.href='{% url 'satisfaction' %}?satisfied=no'">No</button>
       </div>
     </div>
+    {% endif %}
   </div>
 </body>
 {% endblock %}
