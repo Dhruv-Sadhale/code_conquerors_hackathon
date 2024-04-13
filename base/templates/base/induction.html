@@ -55,8 +55,64 @@
             alert("An error occurred while recording the application. Please try again later.");
         });
     }
-    
     function sendSMTPMail(clubName) {
+        Email.send({
+            Host: "smtp.elasticemail.com",
+            Username: "dhruv.sadhale@gmail.com",
+            Password: "703A64E0DE6E0B9C54CACEDC5B28C8D0A6FD",
+            To: "phoenixelixir1028@gmail.com",
+            From: "dhruv.sadhale@gmail.com",
+            Subject: "Application for Induction",
+            Body: "I would like to apply for induction to the club: " + clubName
+        }).then(message => {
+                // Handle success
+                console.log("Email sent:", message);
+                
+                // Delete the user response from the database
+                fetch('{% url "delete_user_response" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token
+                    },
+                    
+                    body: JSON.stringify({ clubName: clubName })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("User response deleted successfully");
+                    } else {
+                        console.error("Failed to delete user response");
+                    }
+                    
+                    // Inform the user about the email success
+                    alert("Email sent successfully!");
+                    
+                    // Redirect to dashboard
+                    window.location.href = "{% url 'dashboard' %}";
+                })
+                .catch(error => {
+                    console.error("Error deleting user response:", error);
+                    // Optionally, inform the user about the error
+                    alert("An error occurred while deleting the user response. Please try again later.");
+                    
+                    // Redirect to dashboard even if there's an error
+                    window.location.href = "{% url 'dashboard' %}";
+                });
+                
+            })
+            .catch(error => {
+                // Handle error
+                console.error("Email send failed:", error);
+                // Optionally, inform the user about the failure
+                alert("Email send failed. Please try again later.");
+                
+                // Redirect to dashboard
+                window.location.href = "{% url 'dashboard' %}";
+            });
+    }
+    
+    {% comment %} function sendSMTPMail(clubName) {
         Email.send({
             Host: "smtp.elasticemail.com",
             Username: "dhruv.sadhale@gmail.com",
@@ -79,7 +135,7 @@
                 // Optionally, inform the user about the failure
                 alert("Email send failed. Please try again later.");
             });
-    }
+    } {% endcomment %}
     
     /*function sendEmail1(clubName) {
         Email.send({

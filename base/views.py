@@ -381,5 +381,30 @@ def transfer_applicants(request, club_name):
     else:
         # Handle GET request (if needed)
         pass
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import ClubResponse
+
+@csrf_exempt
+def delete_user_response(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        
+        # Extract the club name from the parsed data
+        club_name = data.get('clubName')
+        
+        # Get the user's response for the given club
+        user_response = ClubResponse.objects.filter(user=request.user, club=club_name).first()
+        
+        if user_response:
+            # Delete the user's response
+            user_response.delete()
+            return JsonResponse({'message': 'User response deleted successfully'}, status=200)
+        else:
+            return JsonResponse({'error': 'User response not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
