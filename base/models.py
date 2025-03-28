@@ -3,8 +3,23 @@ from django.contrib.auth.models import User
 # Create your models here.
 # models.py
 from django.utils import timezone
+from django import forms
+from django.contrib.auth.hashers import make_password, check_password
 
+class ClubAdmin(models.Model):
+    username = models.CharField(max_length=150, unique=True)
+    password = models.CharField(max_length=255)  
 
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+        self.save()
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+
+class ClubAdminLoginForm(forms.Form):
+    username = forms.CharField(max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput)
 
 class Faculty(models.Model):
     username= models.TextField(default='null')

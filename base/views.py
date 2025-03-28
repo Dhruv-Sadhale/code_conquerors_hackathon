@@ -25,7 +25,7 @@ from .models import QuizResponse
 from .models import Faculty
 # views.py
 from django.utils import timezone
-import qrcode
+#import qrcode
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from io import BytesIO
@@ -42,6 +42,30 @@ def explore(request, pk):
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 import json
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib import messages
+from .models import ClubAdmin
+from .forms import ClubAdminLoginForm
+
+def club_admin_login(request):
+    if request.method == "POST":
+        form = ClubAdminLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            try:
+                club_admin = ClubAdmin.objects.get(username=username)
+                if club_admin.check_password(password):
+                    request.session['club_admin_id'] = club_admin.id  # Store session data
+                    messages.success(request, "Login successful!")
+                    return redirect('club_admin_dashboard')  # Redirect to a dashboard
+            except ClubAdmin.DoesNotExist:
+                messages.error(request, "Invalid username or password.")
+    else:
+        form = ClubAdminLoginForm()
+    
+    return render(request, 'club_admin_login.html', {'form': form})
 
 def core(request, pk):
     # Retrieve the club object based on the primary key (pk)

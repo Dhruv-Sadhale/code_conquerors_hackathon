@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views
 # from .views import SignUpView, LoginView, DashboardView
-from .views import home, submit_notification
+from .views import home, submit_notification, club_admin_login
 
 
 urlpatterns = [
+    path('club-admin-login/', club_admin_login, name='club_admin_login'),
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     path('register/', views.registerPage, name="register"),
