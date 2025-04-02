@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Centers vertically */
+        align-items: center;
+        /* Centers horizontally */
+        height: 80vh;
+        /* Takes 80% of viewport height */
+    }
+
+    textarea {
+        margin-top: 20px;
+        width: 400px;
+        height: 150px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        resize: none;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #4A90E2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #357ABD;
+    }
+
+    #response-container {
+        margin-top: 30px;
+        text-align: center;
+        width: 60%;
+    }
+</style>
+
+<div class="container">
+    <h2>Ask Gemini AI</h2>
+    <form method="POST" id="gemini-form">
+        {% csrf_token %}
+        <textarea name="prompt" rows="4" cols="50" placeholder="Enter your prompt..."></textarea>
+        <br>
+        <button type="submit">Get Response</button>
+    </form>
+    <div id="response-container">
+        <h3>Response:</h3>
+        <p id="response-text"></p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('gemini-form').onsubmit = async function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const response = await fetch("{% url 'gemini_response' %}", {
+            method: "POST",
+            body: formData,
+        });
+        const data = await response.json();
+        document.getElementById('response-text').innerText = data.response || data.error;
+    };
+</script>
+{% endblock %}

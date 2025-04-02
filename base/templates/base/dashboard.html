@@ -1,62 +1,72 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
 <body class="dashboard-bg">
   <div class="content-wrapper">
-    {% comment %} {% verbatim %}
+    <!-- Greet the user dynamically based on time -->
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
         var time = new Date().getHours();
         var msg = "";
-        var username = "{{ username }}"; 
+        var username = "{{ user.first_name|default:user.username }}"; // Use Google-provided first name if available
         if (time < 12) {
-            msg = "Good morning";
+          msg = "Good morning, ";
         } else if (time < 18) {
-            msg = "Good afternoon";
+          msg = "Good afternoon, ";
         } else {
-            msg = "Good evening";
+          msg = "Good evening, ";
         }
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("greeting").innerText = msg+ username ;
-        });
+        document.getElementById("greeting").innerText = msg + username + "!";
+      });
     </script>
-    {% endverbatim %} {% endcomment %}
-    <h2 id="greeting">Welcome to your dashboard, {{ username }}.</h2>
-   
+
+    <!-- Greeting Section -->
+    <h2 id="greeting" style="color: aqua;">Welcome to your dashboard, {{ user.first_name|default:user.username }}.</h2>
+
+    <!-- Recommended Clubs Section -->
     <div class="clubs-section">
-      
-        <h2>Recommended clubs:</h2>
+      <h2 style="color: aqua;">Recommended Clubs:</h2>
       {% if user_responses %}
-        {% for response in user_responses %}
-          <div class="club-container">
-            <h3>{{ response.club }}</h3>
-            <p>{{ response.description }}</p>
-            
-          </div>
-        {% endfor %}
+      {% for response in user_responses %}
+      <div class="club-container">
+        <h3>{{ response.club }}</h3> <!-- Use .name for Club name -->
+        <!-- <p>{{ response.description }}</p> -->
+      </div>
+      {% endfor %}
       {% else %}
-        <p>No responses available.</p>
+      <p>No responses available. Please take the test to get club recommendations.</p>
       {% endif %}
     </div>
+
+    <!-- Inducted Clubs Section -->
     <div class="inducted-clubs-section">
-      <h2>Inducted in:</h2>
+      <h2 style="color: aqua;">Inducted In:</h2>
       {% if inducted_clubs %}
-        {% for club in inducted_clubs %}
-          <div class="club-container">
-            <h3><a href="{% url 'core' pk=club.club %}">{{ club.club }}</a></h3>
-            <p>You are an inductee in this club.</p>
-          </div>
-        {% endfor %}
+      {% for club in inducted_clubs %}
+      <div class="club-container">
+        <h3>
+          <a href="{% url 'core' pk=club.club %}">{{ club.club }}</a> 
+        </h3>
+        <p>You are an inductee in this club.</p>
+      </div>
+      {% endfor %}
       {% else %}
-        <p>You are not an inductee in any club.</p>
+      <p>You are not an inductee in any club.</p>
       {% endif %}
     </div>
+
     {% if user_responses %}
     <div class="satisfaction-section">
-      <h3>Are you satisfied with the recommendations?</h3>
-      <!-- Links for "Yes" and "No" -->
+      <h3 style="color: aqua;">Are you satisfied with the recommendations?</h3>
       <div class="satisfaction-links">
-        <button type="button" onclick="location.href='{% url 'satisfaction' %}?satisfied=yes'">Yes</button>
-        <button type="button" onclick="location.href='{% url 'satisfaction' %}?satisfied=no'">No</button>
+        <a href="{% url 'satisfaction' %}?satisfied=yes">
+          <button type="button">Yes</button>
+        </a>
+        
+        <a href="{% url 'satisfaction' %}?satisfied=no">
+          <button type="button">No</button>
+        </a>
       </div>
     </div>
     {% endif %}

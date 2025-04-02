@@ -17,5 +17,3 @@ admin.site.register(Question)
 admin.site.register(UserFeedback)
 admin.site.register(Club_Secondary)
 admin.site.register(Faculty)
-
-

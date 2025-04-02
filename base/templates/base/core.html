@@ -5,35 +5,35 @@
 
 <body class="dashboard-bg">
   <div class="content-wrapper">
-    <h2>{{ club_object.club }} Core Members</h2>
+    <h2 style="color: aqua;">{{ club_object.club }} Core Members</h2>
     
-    <h3>Categories:</h3>
+    <h3 style="color: aqua;">Categories:</h3>
     {% comment %} <!-- Display categories here -->
     <img src="{% url 'generate_qrcode' club_name=club_object.club %}" alt="Club QR Code">
     <a href="{% url 'attend_club' club_name=club_object.club %}">Attend Club</a> {% endcomment %}
     
-    <h3>Inducted Members:</h3>
+    <h3 style="color: aqua;">Inducted Members:</h3>
     <ul>
       {% for member in inducted_members %}
         <li>{{ member.username }}</li>
       {% endfor %}
     </ul>
 
-    <h3>Applicants:</h3>
+    <h3 style="color: aqua;">Applicants:</h3>
     <form id="transferForm" method="post" action="{% url 'transfer_applicants' club_name=club_object.club %}">
       {% csrf_token %}
       <ul>
         {% for applicant in club_object.applicants.all %}
             {%if applicant  not in inducted_members%}
-          <li>
-            <input type="checkbox" name="selected_applicants" value="{{ applicant.id }}">
+          <li >
+            <input type="checkbox" name="selected_applicants" value="{{ applicant.id }}" >
             {{ applicant.username }}
           </li>
           {%endif%}
         {% endfor %}
       </ul>
       {% if club_object.applicants.exists %}  <!-- Check if applicants exist -->
-      <button id="transferButton" type="button">Transfer Selected Applicants</button>
+      <button id="transferButton" type="button" style="color: aqua;">Transfer Selected Applicants</button>
     {% endif %}
     </form>
   </div>

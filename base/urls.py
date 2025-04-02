@@ -1,20 +1,19 @@
 from django.urls import path
 from . import views
-# from .views import SignUpView, LoginView, DashboardView
 from .views import home, submit_notification
 
 
 urlpatterns = [
-    path('login/', views.loginPage, name="login"),
-    path('logout/', views.logoutUser, name="logout"),
-    path('register/', views.registerPage, name="register"),
+    # path('login/', views.loginPage, name="login"),
+    path('logout/', views.logout_view, name="logout"),
+    # path('register/', views.registerPage, name="register"),
     path('home/',views.home, name="home" ),
 
     path('',views.home, name="home" ),
    path('submit-notification/', submit_notification, name='submit_notification'),
     path('clubs/explore/<str:pk>/',views.explore,name='explore'),
 
-    path('questionnaire/', views.questionnaire, name='questionnaire'),
+    path('questionnaire/', views.gemini_response, name='questionnaire'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('satisfaction/', views.satisfaction, name='satisfaction'),
     path('generate_qrcode/<str:club_name>/', views.generate_qrcode, name='generate_qrcode'),
@@ -27,8 +26,8 @@ urlpatterns = [
     path('record_applicant/', views.record_applicant, name='record_applicant'),
     path('transfer_applicants/<str:club_name>/', views.transfer_applicants, name='transfer_applicants'),
     path( 'delete_user_response/', views.delete_user_response, name='delete_user_response'),
-    # path('faculty/', views.faculty_login, name='faculty')
-    
-    # path('faculty/', views.faculty, name='faculty'),
+    path('email/', views.send_email, name='send_email'),
+    path('gemini/', views.gemini_response, name='gemini_response'),
+    path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     ]
 

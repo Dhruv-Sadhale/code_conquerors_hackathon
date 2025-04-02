@@ -399,65 +399,7 @@
             }
         }
 
-        /* body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #2a2a2a;
-            color: #fff;
-        } */
-        /* #clubNavigator {
-            font-size: 3em; 
-            margin-bottom: 10px; 
-            display: inline-block;
-        }*/
-        
-        /* .typed-cursor {
-            font-size: 3em;
-            display: inline; 
-            margin-left: 5px;
-        } */
-
-        /* header {
-            background-color: #343a40;
-        } */
-
-        /* .navbar{
-            position: relative;
-            z-index: 10;
-        } */
-        
-        /* 
-        .navbar-brand, .nav-link {
-            color: #fff !important;
-            transition: color 0.3s ease, border-bottom-color 0.3s ease;            
-        } */
-        
-        /* .navbar-brand:hover, .nav-link:hover {
-            color: #797d99 !important;
-            border-bottom: 2px solid #ffc107; 
-        } */
-        
-        /* .navbar-brand:hover::after,
-        .nav-link:hover::after {
-            content: '';
-              
-            z-index: 10;
-            width: 100%;
-            height: 2px;
-            background-color: #ffc107; 
-            bottom: 0;
-            left: 0;
-            transform: scaleX(0); 
-            transform-origin: bottom right;
-            transition: transform 0.3s ease;
-        }
-        
-        .navbar-brand:hover::after,
-        .nav-link:hover::after {
-            transform-origin: bottom left;
-        }
-        */
+       
         
         .hero {
             position: relative;
@@ -986,7 +928,7 @@
         
         /* styling for the dashboard continued */
         body.dashboard-bg {
-          background-image: url('../images/pexels-aditya-singh-3103199.jpg');
+          background-image: url('../images/pexels-jeshoots-234527.jpg');
           background-size: cover;
           background-position: center;
           margin: 0;
@@ -1018,3 +960,7 @@
           transform: translateY(-5px) rotate(-1deg); /* Tilt effect on hover */
         }
         
+
+.navbar{
+  height: 12px;
+}
