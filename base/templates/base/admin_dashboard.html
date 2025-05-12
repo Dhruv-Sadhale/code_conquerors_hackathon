@@ -2,12 +2,35 @@
 
 {% block content %}
 
-<h2>Admin Dashboard</h2>
-<ul>
-    {% for club in clubs %}
-    <li>
-        <a href="{% url 'core' pk=club.club %}">{{ club.club }}</a>
-    </li>
-    {% endfor %}
-</ul>
+<div style="
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    padding: 90px;
+    font-family: Arial, sans-serif;
+    color: white;
+    box-sizing: border-box;
+">
+
+    <h2 style="text-align: center; font-size: 2em; margin-bottom: 30px;">Admin Dashboard</h2>
+
+    <ul style="list-style-type: none; padding: 0; max-width: 500px; margin: auto;">
+        {% for club in clubs %}
+        <li style="
+          background-color: rgba(255, 255, 255, 0.1);
+          margin-bottom: 15px;
+          padding: 15px 20px;
+          border-radius: 8px;
+          text-align: center;
+          transition: background 0.3s;
+        " onmouseover="this.style.backgroundColor='rgba(255,255,255,0.2)'"
+            onmouseout="this.style.backgroundColor='rgba(255,255,255,0.1)'">
+            <a href="{% url 'core' pk=club.club %}" style="color: aqua; text-decoration: none; font-weight: bold;">
+                {{ club.club }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
 {% endblock %}

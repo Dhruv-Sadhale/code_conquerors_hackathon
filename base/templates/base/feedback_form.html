@@ -1,12 +1,40 @@
-
-
 {% block content %}
-  <h3>Feedback Form</h3>
 
-  <form method="post" action="">
+<div style="
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    padding: 80px 40px 40px 40px;
+    font-family: Arial, sans-serif;
+    color: white;
+    box-sizing: border-box;
+">
+
+  <h3 style="text-align: center; font-size: 1.8em; margin-bottom: 30px;">Feedback Form</h3>
+
+  <form method="post" action="" style="
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    ">
     {% csrf_token %}
     {{ feedback_form.as_p }}
 
-    <button type="submit">Submit Feedback</button>
+    <button type="submit" style="
+        background-color: aqua;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+      " onmouseover="this.style.backgroundColor='#00ced1'" onmouseout="this.style.backgroundColor='aqua'">Submit
+      Feedback</button>
   </form>
+
+</div>
+
 {% endblock %}

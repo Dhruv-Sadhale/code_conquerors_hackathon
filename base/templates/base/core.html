@@ -15,7 +15,7 @@
     <h3 style="color: aqua;">Inducted Members:</h3>
     <ul>
       {% for member in inducted_members %}
-        <li>{{ member.username }}</li>
+      <li><span style="color: aqua;">{{ member.username }}</span></li>
       {% endfor %}
     </ul>
 
@@ -24,12 +24,12 @@
       {% csrf_token %}
       <ul>
         {% for applicant in club_object.applicants.all %}
-            {%if applicant  not in inducted_members%}
-          <li >
-            <input type="checkbox" name="selected_applicants" value="{{ applicant.id }}" >
-            {{ applicant.username }}
-          </li>
-          {%endif%}
+        {% if applicant not in inducted_members %}
+        <li>
+          <input type="checkbox" name="selected_applicants" value="{{ applicant.id }}">
+          <span style="color: aqua;">{{ applicant.username }}</span>
+        </li>
+        {% endif %}
         {% endfor %}
       </ul>
       {% if club_object.applicants.exists %}  <!-- Check if applicants exist -->

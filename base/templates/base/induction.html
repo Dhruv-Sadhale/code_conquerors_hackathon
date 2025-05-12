@@ -3,12 +3,10 @@
 {% block content %}
 <body class="dashboard-bg">
     <div class="content-wrapper">
-      <h2 id="greeting">Apply for Inductions, {{ username }}.</h2>
-     
+<h2 id="greeting" style="color: white;">Apply for Inductions, {{ username }}.</h2>
       <div class="clubs-section">
         
-          <h2>Select the clubs you want to apply for inductions</h2>
-        {% if user_responses %}
+<h2 style="color: white;">Select the clubs you want to apply for inductions</h2>        {% if user_responses %}
           {% for response in user_responses %}
             <div class="club-container">
               {% if response.club_clicked %}
